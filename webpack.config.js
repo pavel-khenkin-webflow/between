@@ -10,7 +10,8 @@ module.exports = {
 	entry: {
 		home: './pages/home/index.js',
 		about: './pages/about/index.js',
-		industries: './pages/industries/index.js',
+		test: './pages/test/index.js',
+		'about-test': './pages/about-test/index.js',
 	},
 	output: {
 		path: path.join(__dirname, '/build'),

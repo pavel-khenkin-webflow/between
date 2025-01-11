@@ -1,4 +1,3 @@
-// Animation functions
 import { gsap } from 'gsap'
 
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -8,7 +7,6 @@ import { DrawSVGPlugin } from 'gsap/DrawSVGPlugin'
 import { ScrollSmoother } from 'gsap/ScrollSmoother'
 import { SplitText } from 'gsap/SplitText'
 import { ScrollToPlugin } from 'gsap/all'
-import { animatePreloader, hidePreloader } from '../../utils/preloader'
 
 gsap.registerPlugin(
 	ScrollTrigger,
@@ -85,32 +83,10 @@ export const animateImage = (className, tl) => {
 		0
 	)
 }
-window.addEventListener('load', function () {
-	// Получите якорь из URL
-	const hash = window.location.hash
 
-	if (hash) {
-		// Найдите элемент с идентификатором, равным якорю
-		const targetElement = document.querySelector(hash)
-
-		if (targetElement) {
-			// Используйте GSAP для плавной прокрутки к элементу
-			setTimeout(() => {
-				gsap.to(window, {
-					duration: 1,
-					scrollTo: { y: targetElement, offsetY: 70 }, // добавьте offsetY при необходимости
-					ease: 'power2.inOut',
-				})
-			}, 100) // Увеличьте таймаут, если нужно больше времени для загрузки элементов
-		}
-	}
-
-	hidePreloader()
-})
-document.addEventListener('DOMContentLoaded', event => {
-	animatePreloader()
-	// scroll to section
-	// Найти все элементы с классами "w-background-video" или "w-background-video-atom"
+function Init() {
+	// Здесь вызываем анимации после загрузки страницы
+	console.log('loaded')
 
 	const burger = document.querySelector('.burger')
 	console.log(burger)
@@ -119,6 +95,33 @@ document.addEventListener('DOMContentLoaded', event => {
 	linkIndr.addEventListener('click', function () {
 		console.log('link clicked!')
 		burger.click()
+	})
+
+	// Create the observer for checking if video is in view
+	const observer = new IntersectionObserver(
+		entries => {
+			entries.forEach(entry => {
+				if (entry.isIntersecting) {
+					entry.target.play()
+				} else {
+					entry.target.pause()
+				}
+			})
+		},
+		{
+			threshold: 0.2, // 0 (default) - element must be totally offscreen, 0.5 - 50%, 1 - element fully on screen
+		}
+	)
+
+	// Select all videos with data attribute wb-embed="video"
+	const videos = document.querySelectorAll('[wb-embed="video"]')
+
+	// Loop through all the videos
+	videos.forEach(video => {
+		// Pause on initial load
+		video.pause()
+		// Watch for entering viewport
+		observer.observe(video)
 	})
 
 	let mobileIgnore = gsap.matchMedia()
@@ -381,4 +384,12 @@ document.addEventListener('DOMContentLoaded', event => {
 			gsap.to(line, { duration: 1, width: '0%' })
 		})
 	})
-})
+}
+
+if (document.readyState === 'complete') {
+	Init()
+} else {
+	window.addEventListener('load', function () {
+		Init()
+	})
+}

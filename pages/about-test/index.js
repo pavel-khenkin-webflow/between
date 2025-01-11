@@ -7,17 +7,14 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { DrawSVGPlugin } from 'gsap/DrawSVGPlugin'
 import { ScrollSmoother } from 'gsap/ScrollSmoother'
 import { SplitText } from 'gsap/SplitText'
-import { animatePreloader, hidePreloader } from '../../utils/preloader'
 
-document.addEventListener('DOMContentLoaded', (event) => {
+document.addEventListener('DOMContentLoaded', event => {
 	gsap.registerPlugin(ScrollTrigger, DrawSVGPlugin, ScrollSmoother, SplitText)
 	// gsap code here!
-
-	animatePreloader()
 	// animate inputs
 	const inputs = document.querySelectorAll('.field')
 
-	inputs.forEach((input) => {
+	inputs.forEach(input => {
 		const line = input.nextElementSibling
 
 		input.addEventListener('focus', function () {
@@ -33,7 +30,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 	const formCloseBtn = document.querySelector('.close-icon')
 	const modalForm = document.querySelector('#modal-form')
 
-	formBtnOpen.forEach((btn) => {
+	formBtnOpen.forEach(btn => {
 		btn.addEventListener('click', () => {
 			console.log('form open!')
 			// Выполнить анимацию с opacity и height
@@ -156,111 +153,104 @@ document.addEventListener('DOMContentLoaded', (event) => {
 	)
 	animateText('.section_discover [animate="reveal-effect-t"]', heroTl)
 
-	window.addEventListener('load', () => {
-		heroTl.play()
+	heroTl.play()
 
-		const burger = document.querySelector('.burger')
-		console.log(burger)
-		const linkIndr = document.getElementById('link-industries')
+	const burger = document.querySelector('.burger')
+	console.log(burger)
+	const linkIndr = document.getElementById('link-industries')
 
-		linkIndr.addEventListener('click', function () {
-			console.log('link clicked!')
-			burger.click()
-		})
-
-		// discover section ----------------------------------DISCOVER
-
-		const discoverTl = gsap.timeline({
-			scrollTrigger: {
-				trigger: '.discover_bot',
-				start: '-50% top',
-				end: 'bottom bottom',
-			},
-		})
-		animateHeading('.discover_bot [animate="reveal-heading"]', discoverTl)
-		animateText('.discover_bot [animate="reveal-effect-text"]', discoverTl)
-
-		// hero discover show text
-
-		const discoverBtn = document.querySelector('.discover_btn')
-		const discoverTexts = document.querySelectorAll('.discover-text')
-
-		discoverBtn.addEventListener('click', function () {
-			this.clickCount = (this.clickCount || 0) + 1
-
-			if (this.clickCount % 2 === 1) {
-				// Первая анимация при первом и каждом нечетном клике
-				gsap.to(discoverTexts, {
-					opacity: 0,
-					height: 0,
-				})
-				gsap.to(
-					discoverBtn,
-					{
-						rotation: 0,
-						duration: 0.4,
-					},
-					0
-				)
-			} else {
-				// Вторая анимация при втором и каждом четном клике
-				gsap.to(discoverTexts, {
-					opacity: 1,
-					height: 'auto',
-				})
-				gsap.to(
-					discoverBtn,
-					{
-						rotation: 180,
-						duration: 0.4,
-					},
-					0
-				)
-			}
-		})
-
-		//section_ali
-
-		const aliTl = gsap.timeline({
-			scrollTrigger: {
-				trigger: '.section_ali',
-				start: 'top 60%',
-				end: 'bottom center',
-			},
-		})
-		animateHeading('.section_ali [animate="reveal-heading"]', aliTl)
-		animateText('.section_ali [animate="reveal-effect-text"]', aliTl)
-		animateImage('.section_ali [animate="image"]', aliTl)
-
-		//section_family
-
-		const familyTl = gsap.timeline({
-			scrollTrigger: {
-				trigger: '.section_family',
-				start: 'top 60%',
-				end: 'bottom center',
-			},
-		})
-		animateHeading('.section_family [animate="reveal-heading"]', familyTl)
-		animateElement('.section_family [animate="reveal-element"]', familyTl)
-		animateText('.section_family [animate="reveal-effect-text"]', familyTl)
-		animateImage('.section_family [animate="image"]', familyTl)
-
-		// animation section_talk
-
-		const ctaTl = gsap.timeline({
-			scrollTrigger: {
-				trigger: '.section_talk',
-				start: 'top center',
-				end: 'bottom center',
-			},
-		})
-		animateHeading('.section_talk [animate="reveal-heading"]', ctaTl)
-		animateElement('.section_talk [animate="reveal-effect-element"]', ctaTl)
+	linkIndr.addEventListener('click', function () {
+		console.log('link clicked!')
+		burger.click()
 	})
-})
 
-window.addEventListener('load', () => {
-	// Скрытие прелоадера после полной загрузки страницы
-	hidePreloader()
+	// discover section ----------------------------------DISCOVER
+
+	const discoverTl = gsap.timeline({
+		scrollTrigger: {
+			trigger: '.discover_bot',
+			start: '-50% top',
+			end: 'bottom bottom',
+		},
+	})
+	animateHeading('.discover_bot [animate="reveal-heading"]', discoverTl)
+	animateText('.discover_bot [animate="reveal-effect-text"]', discoverTl)
+
+	// hero discover show text
+
+	const discoverBtn = document.querySelector('.discover_btn')
+	const discoverTexts = document.querySelectorAll('.discover-text')
+
+	discoverBtn.addEventListener('click', function () {
+		this.clickCount = (this.clickCount || 0) + 1
+
+		if (this.clickCount % 2 === 1) {
+			// Первая анимация при первом и каждом нечетном клике
+			gsap.to(discoverTexts, {
+				opacity: 0,
+				height: 0,
+			})
+			gsap.to(
+				discoverBtn,
+				{
+					rotation: 0,
+					duration: 0.4,
+				},
+				0
+			)
+		} else {
+			// Вторая анимация при втором и каждом четном клике
+			gsap.to(discoverTexts, {
+				opacity: 1,
+				height: 'auto',
+			})
+			gsap.to(
+				discoverBtn,
+				{
+					rotation: 180,
+					duration: 0.4,
+				},
+				0
+			)
+		}
+	})
+
+	//section_ali
+
+	const aliTl = gsap.timeline({
+		scrollTrigger: {
+			trigger: '.section_ali',
+			start: 'top 60%',
+			end: 'bottom center',
+		},
+	})
+	animateHeading('.section_ali [animate="reveal-heading"]', aliTl)
+	animateText('.section_ali [animate="reveal-effect-text"]', aliTl)
+	animateImage('.section_ali [animate="image"]', aliTl)
+
+	//section_family
+
+	const familyTl = gsap.timeline({
+		scrollTrigger: {
+			trigger: '.section_family',
+			start: 'top 60%',
+			end: 'bottom center',
+		},
+	})
+	animateHeading('.section_family [animate="reveal-heading"]', familyTl)
+	animateElement('.section_family [animate="reveal-element"]', familyTl)
+	animateText('.section_family [animate="reveal-effect-text"]', familyTl)
+	animateImage('.section_family [animate="image"]', familyTl)
+
+	// animation section_talk
+
+	const ctaTl = gsap.timeline({
+		scrollTrigger: {
+			trigger: '.section_talk',
+			start: 'top center',
+			end: 'bottom center',
+		},
+	})
+	animateHeading('.section_talk [animate="reveal-heading"]', ctaTl)
+	animateElement('.section_talk [animate="reveal-effect-element"]', ctaTl)
 })
